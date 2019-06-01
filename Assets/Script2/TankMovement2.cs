@@ -50,7 +50,10 @@ namespace Complete {
         {
             //跟据不同的输入给变量赋值
             m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+            
             m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+
+            EngineAudio();
 
         }
 
@@ -58,6 +61,7 @@ namespace Complete {
             //如果神马按键都没有按下
             if (Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f)
             {
+                Debug.Log("movementInput");
                 //如果当前播放的声音是正在移动的音频
                 if (m_MovementAudio.clip == m_EngineDriving)
                 {
@@ -82,12 +86,14 @@ namespace Complete {
         }
 
         private void FixedUpdate() {
-
+            Move();
+            Turn();
         }
 
         private void Move() {
             //创建一个变量，用来保存移动的距离
             Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+            Debug.Log("forward");
             //改变当前物体的位置
             m_Rigidbody.MovePosition(m_Rigidbody.position+movement);
         }
